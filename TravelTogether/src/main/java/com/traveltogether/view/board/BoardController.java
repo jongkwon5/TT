@@ -33,6 +33,8 @@ import com.traveltogether.biz.board.BoardVO;
 import com.traveltogether.biz.board.CommentVO;
 import com.traveltogether.biz.board.Criteria;
 import com.traveltogether.biz.board.FileUtils;
+import com.traveltogether.biz.chat.ChatCountDTO;
+import com.traveltogether.biz.chat.ChatRoomDTO;
 import com.traveltogether.biz.festival.FestivalVO;
 
 @Controller
@@ -148,6 +150,8 @@ public class BoardController {
 		
 		return "board";
 	}
+	
+ 
 	
 	@RequestMapping(value = "/updateBoard", method = RequestMethod.GET)
 	public String updateBoardGet(BoardVO board, BoardImageVO boardImage, FestivalVO festival, Model model, HttpServletRequest request) {

@@ -1,11 +1,13 @@
 package com.traveltogether.view.festival;
 
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.traveltogether.biz.chat.ChatCountDTO;
+import com.traveltogether.biz.chat.ChatRoomDTO;
 import com.traveltogether.biz.festival.FestivalService;
 import com.traveltogether.biz.festival.FestivalVO;
 import com.traveltogether.biz.festival.impl.FestivalServiceimpl;
@@ -51,8 +55,7 @@ public class FestivalController {
         return response;
     }
     
-  
-    
+	
 	
 	@RequestMapping("/getFestival")
 	public String getFestival(FestivalVO vo, Model model, HttpSession session) {
@@ -76,12 +79,16 @@ public class FestivalController {
 	}
 	
 	
-	@RequestMapping("/getFestivalList_Month")
-	public String getFestivalList_Month(FestivalVO vo, Model model){
-	
-		model.addAttribute("festivalList", festivalService.getFestivalList_Month(vo));
-		return "festivalList";
-	}
+	  /* header */
+    @RequestMapping(value = "/main")
+    public String main(HttpServletRequest request, ChatRoomDTO dto, ChatCountDTO dto2, Model model, FestivalVO vo2) throws IOException {
+        model.addAttribute("festivalLikeList", festivalService.getFestivalLikeList(vo2));
+        model.addAttribute("festivalRandomList", festivalService.getFestivalRandomList(vo2));
+        HttpSession session = request.getSession();
+
+        return "main";
+    }
+
 
 	/* 김초율 추가 */
 	@RequestMapping("/getRegionFestivals")

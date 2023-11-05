@@ -16,12 +16,12 @@ public class ChatRoomServiceImpl implements ChatRoomService{
 	@Autowired
 	private ChatRoomDAO chatRoomDAO;
 
-	public void createChat(ChatRoomDTO dto) {
-		chatRoomDAO.CreateChat(dto);
+	public void createChatRoom(ChatRoomDTO dto) {
+		chatRoomDAO.createChatRoom(dto);
 	}
 	
-	public List<ChatRoomDTO> getChatList(ChatRoomDTO dto) {
-		return chatRoomDAO.getChatList(dto);
+	public List<ChatRoomDTO> getChatRoomList(ChatRoomDTO dto) {
+		return chatRoomDAO.getChatRoomList(dto);
 	}
 	
 	public void chatRoomUserInsert (ChatCountDTO dto) {

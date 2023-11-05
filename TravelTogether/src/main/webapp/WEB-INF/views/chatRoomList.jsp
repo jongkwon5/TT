@@ -22,7 +22,7 @@
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
-                <form action="insertChat" method="get">
+                <form action="chat-rooms" method="post">
                     <label id="roomCreate">채팅방 만들기</label><br>
                     <label for="chat_regionlist">지역 선택</label>
                     <select id="chat_regionlist" name="chatRegion">
@@ -83,10 +83,15 @@
                     <td>
                         <c:choose>
                             <c:when test="${empty chatRoomList.chatPassword}">
-                                <a href="ChatRoom?chatNumber=${chatRoomList.chatNumber}&chatTitle=${chatRoomList.chatTitle}&memberId=${sessionScope.userId}">
-                                    <span class="region-button">${chatRoomList.chatRegion}</span>
-                                        ${chatRoomList.chatTitle}
-                                </a>
+                                <form id="chatRoomForm" method="post" action="chat-rooms/${chatRoomList.chatNumber}">
+                                    <input type="hidden" name="chatTitle" value="${chatRoomList.chatTitle}"/>
+                                    <input type="hidden" name="memberId" value="${sessionScope.userId}"/>
+                                    <input type="hidden" name="chatNumber" value="${chatRoomList.chatNumber}"/>
+                                    <button type="submit">
+                                        <span class="region-button">${chatRoomList.chatRegion}</span>
+                                            ${chatRoomList.chatTitle}
+                                    </button>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <a href="#" data-chat-number="${chatRoomList.chatNumber}"
@@ -101,7 +106,7 @@
                         </c:choose>
                     </td>
                     <td class="d">
-                        <c:forEach items="${NumberOfPeople}" var="numberOfPeople">
+                        <c:forEach items="${numberOfPeople}" var="numberOfPeople">
                             <c:if test="${chatRoomList.chatNumber eq numberOfPeople.chatNumber}">
                                 ${numberOfPeople.count}명
                             </c:if>
@@ -142,7 +147,7 @@
     function handlePassword(chatNumber, chatPassword, chatTitle, memberId) {
         const enteredPassword = prompt("비밀번호를 입력하세요:");
         if (enteredPassword === chatPassword) {
-            const loginURL = "ChatRoom.do?chatNumber=" + chatNumber + "&chatTitle=" + chatTitle + "&memberId=" + memberId;
+            const loginURL = "chat-rooms/?chatNumber=" + chatNumber + "&chatTitle=" + chatTitle + "&memberId=" + memberId;
             location.href = loginURL;
         } else {
             alert("비밀번호가 다릅니다.");
@@ -177,5 +182,6 @@
             modal.style.display = "none";
         }
     };
+
 </script>
 </html>

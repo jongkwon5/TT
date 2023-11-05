@@ -63,12 +63,12 @@
 		VALUES(#{chatNumber},#{chatTitle},#{memberId},now());
 	</insert>
 	
-	<insert id="createChat" useGeneratedKeys="true" parameterType="chatRoom">
+	<insert id="createChatRoom" useGeneratedKeys="true" parameterType="chatRoom">
 		INSERT INTO ChattingRoom (ChattingRoom_Password, ChattingRoom_Number, ChattingRoom_TITLE, ChattingRoom_Create_Date, ChattingRoom_region)
 		VALUES(#{chatPassword},#{chatNumber},#{chatTitle},now(),#{chatRegion});
 	</insert>
 	
-	<select id="getChatList" resultMap="ChattingRoom">
+	<select id="getChatRoomList" resultMap="ChattingRoom">
 		SELECT * FROM ChattingRoom ORDER BY ChattingRoom_Number DESC;
 	</select>
 	

@@ -28,7 +28,7 @@
          <li><a href="${path}/main">홈</a></li>
          <li><a href="${path}/getFestivalList_Month">축제소개</a></li>
          <li><a href="${path}/boardList">동행게시판</a></li>
-         <li><a href="${path}/ChatRoomList" onclick="chatRoom(event)">채팅</a></li>
+         <li><a href="${path}/chat-rooms" onclick="chatRoom(event)">채팅</a></li>
        </ul>
         <ul class="navbar__icons">
            <c:if test="${empty sessionScope.userId and empty sessionScope.userNickname }"> 

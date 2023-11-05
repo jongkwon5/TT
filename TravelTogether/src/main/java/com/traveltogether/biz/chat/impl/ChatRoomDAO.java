@@ -15,12 +15,12 @@ public class ChatRoomDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public void CreateChat(ChatRoomDTO dto) {
-		mybatis.insert("ChatRoomDAO.createChat", dto);
+	public void createChatRoom(ChatRoomDTO dto) {
+		mybatis.insert("ChatRoomDAO.createChatRoom", dto);
 	}
 	
-	public List<ChatRoomDTO> getChatList(ChatRoomDTO dto) {
-		return mybatis.selectList("ChatRoomDAO.getChatList", dto);
+	public List<ChatRoomDTO> getChatRoomList(ChatRoomDTO dto) {
+		return mybatis.selectList("ChatRoomDAO.getChatRoomList", dto);
 	}
 	
 	public void chatRoomUserInsert(ChatCountDTO dto) {

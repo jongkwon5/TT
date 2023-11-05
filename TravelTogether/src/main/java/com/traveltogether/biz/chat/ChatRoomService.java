@@ -3,9 +3,10 @@ package com.traveltogether.biz.chat;
 import java.util.List;
 
 public interface ChatRoomService {
-    void createChat(ChatRoomDTO dto);
+	
+    void createChatRoom(ChatRoomDTO dto);
 
-    List<ChatRoomDTO> getChatList(ChatRoomDTO dto);
+    List<ChatRoomDTO> getChatRoomList(ChatRoomDTO dto);
 
     void deleteChatUser(ChatRoomDTO dto);
 
@@ -18,4 +19,5 @@ public interface ChatRoomService {
     void deleteChatRoom(ChatCountDTO dto);
 
     ChatRoomDTO getChatRoom(int number);
+    
 }

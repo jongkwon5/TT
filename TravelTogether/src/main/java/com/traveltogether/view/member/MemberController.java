@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.traveltogether.biz.chat.ChatCountDTO;
+import com.traveltogether.biz.chat.ChatRoomDTO;
 import com.traveltogether.biz.common.utill.FileUtills;
 import com.traveltogether.biz.member.MemberService;
 import com.traveltogether.biz.member.MemberVO;
@@ -206,5 +208,7 @@ public class MemberController {
 		int cnt = memberService.checkPassword(vo);
 		return cnt;
 	}
+	
+	
 
 }
