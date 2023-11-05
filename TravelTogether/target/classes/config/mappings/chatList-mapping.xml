@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ChatRoomDAO">
+
+	<resultMap type="chatRoom" id="ChattingRoom">
+		<id property="chatNumber"  column="ChattingRoom_Number"/>  <!-- primary key매핑 -->
+		<result property="chatPassword" column="ChattingRoom_Password"/>
+		<result property="chatTitle" column="ChattingRoom_TITLE"/>
+		<result property="chatRegion" column="ChattingRoom_region"/>
+		<result property="chatCreateDate" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp" column="ChattingRoom_Create_Date"/>
+	</resultMap>
+	
+	<resultMap type="chatCount" id="ChattingRoomCount" extends="ChattingRoom">
+		<id property="memberId" column="MEMBER_ID"/>	
+		<result property="chatCountJoinDate" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp" column="ChattingRoom_join_Date"/>
+		<result property="chatTitle" column="ChattingRoomCount_Room_Title"/>
+		<result property="chatNumber" column="ChattingRoom_Number"/>	
+	</resultMap>
+	
+	<delete id="deleteChatUser">
+		DELETE FROM ChattingRoomCount
+    	WHERE MEMBER_ID = #{memberId};
+	</delete>
+    
+    <delete id="deleteChatRoom">
+     	DELETE FROM ChattingRoom
+     	WHERE ChattingRoom_Number = #{chatNumber};
+    </delete>
+     
+    <select id="getChatRoom" resultMap="ChattingRoom">
+     	SELECT * FROM ChattingRoom
+     	WHERE ChattingRoom_Number = #{chatNumber};
+     </select>
+
+	<select id="getChatRoomNumber">
+		SELECT ChattingRoom_Number FROM ChattingRoom
+     	WHERE ChattingRoom_Number = #{chatNumber};
+	</select>
+
+    <select id="getChatRoomUser" parameterType="int" resultType="Integer">
+		SELECT ChattingRoom_Number, IFNULL(COUNT(*), 0) as count
+		FROM ChattingRoomCount
+		GROUP BY ChattingRoom_Number
+		ORDER BY ChattingRoom_Number = #{chatNumber};
+    </select>
+    
+ 	<select id="getNumberOfPeople" resultType="string" resultMap="ChattingRoomCount">
+		SELECT ChattingRoom_Number, COUNT(*) as count
+		FROM ChattingRoomCount
+		GROUP BY ChattingRoom_Number
+		ORDER BY ChattingRoom_Number DESC;
+	</select>
+	
+	<insert id="chatRoomUserInsert" useGeneratedKeys="true" parameterType="chatCount">
+		<selectKey resultType="int" order="BEFORE" keyProperty="chatNumber">
+			SELECT ChattingRoom_Number
+       	 	FROM ChattingRoom
+        	WHERE ChattingRoom_TITLE = #{chatTitle}
+   		</selectKey>
+		INSERT INTO ChattingRoomCount (ChattingRoom_Number, ChattingRoomCount_Room_Title, MEMBER_ID, ChattingRoom_join_Date)
+		VALUES(#{chatNumber},#{chatTitle},#{memberId},now());
+	</insert>
+	
+	<insert id="createChat" useGeneratedKeys="true" parameterType="chatRoom">
+		INSERT INTO ChattingRoom (ChattingRoom_Password, ChattingRoom_Number, ChattingRoom_TITLE, ChattingRoom_Create_Date, ChattingRoom_region)
+		VALUES(#{chatPassword},#{chatNumber},#{chatTitle},now(),#{chatRegion});
+	</insert>
+	
+	<select id="getChatList" resultMap="ChattingRoom">
+		SELECT * FROM ChattingRoom ORDER BY ChattingRoom_Number DESC;
+	</select>
+	
+</mapper>
