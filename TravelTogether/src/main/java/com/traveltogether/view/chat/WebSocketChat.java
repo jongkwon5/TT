@@ -61,12 +61,8 @@ public class WebSocketChat {
                 Basic basic = session.getBasicRemote();
                 targetSession.getBasicRemote().sendText("NOTICE" + nickName + "님이 입장하셨습니다");
             }
-        }
-        for (Session targetSession : targetSessions) {
             roomNickNames.add(nickNames.get(targetSession.getId())); // roomNumber에 해당하는 세션의 nickName목록을 가져온 가져온 다음, 새로운 roomNickNames배열에 추가함.
-        }
-        for (Session sessions : targetSessions) {
-            sessions.getBasicRemote().sendText("NICKNAMES:" + new Gson().toJson(roomNickNames)); // 채팅방 접속 유저 리스트 업데이트
+            targetSession.getBasicRemote().sendText("NICKNAMES:" + new Gson().toJson(roomNickNames)); // 채팅방 접속 유저 리스트 업데이트
         }
         getRoomSize(roomNumber);
     }
