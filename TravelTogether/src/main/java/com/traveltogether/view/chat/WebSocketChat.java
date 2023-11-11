@@ -58,7 +58,6 @@ public class WebSocketChat {
         targetSessions = chatRooms.get(roomNumber); //chatRooms맵에서 roomNumber에 해당하는 세션 목록을 가져옵니다.
         for (Session targetSession : targetSessions) {
             if (!session.getId().equals(targetSession.getId())) { // 현재 클라이언트를 제외한 다른 모든 클라이언트에게 메시지를 보냄.
-                Basic basic = session.getBasicRemote();
                 targetSession.getBasicRemote().sendText("NOTICE" + nickName + "님이 입장하셨습니다");
             }
             roomNickNames.add(nickNames.get(targetSession.getId())); // roomNumber에 해당하는 세션의 nickName목록을 가져온 가져온 다음, 새로운 roomNickNames배열에 추가함.
